@@ -1,0 +1,37 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+  <link rel="stylesheet" href="../../node_modules/mocha/mocha.css" />
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+  <script src="q.js"></script>
+  <script src="../node_modules/mocha/mocha.js"></script>
+  <script>mocha.setup('tdd')</script>
+  <script src="../node_modules/chai/chai.js"></script>
+  <script src="../node_modules/chai-as-promised/lib/chai-as-promised.js"></script>
+</head>
+<body>
+
+  <div id="mocha"></div>
+
+  <script type="text/javascript" src="../js/gamete/init.js"></script>
+  <script>
+    var expect = chai.expect;
+  </script>
+  <script src="test_setup.js"></script>
+  <script src="test_loader.js"></script>
+  <script src="test_color.js"></script>
+  <script src="test_drawable.js"></script>
+  <script src="test_easing.js"></script>
+  <script src="test_vector.js"></script>
+  <script>
+    document.addEventListener('loaded', function(){
+      //mocha.globals([ 'script*' ]).run();
+      mocha
+        //.globals([ 'script*', 'image' ])
+        .run()
+        .globals(['script*'])
+    })
+  </script>
+</body>
+</html>

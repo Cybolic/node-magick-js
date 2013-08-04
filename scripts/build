@@ -1,0 +1,5 @@
+#!/bin/sh
+
+DIR="$(dirname "$(readlink -f "$0")/")/../"
+
+coffee -b -c -o "$DIR/lib/" "$DIR/src/"*.coffee

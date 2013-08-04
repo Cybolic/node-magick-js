@@ -1,0 +1,16 @@
+#!/bin/sh
+
+cd "$(dirname "$(readlink -f "$0")/")/../"
+
+# Get version number from package.json, need this for tagging.
+version="$(node -e "console.log(JSON.parse(require('fs').readFileSync('package.json')).version)")"
+name="$(node -e "console.log(JSON.parse(require('fs').readFileSync('package.json')).name)")"
+
+# Push master to Github, tag current version
+git push
+#git tag v${version}
+#git push --tags origin master
+
+npm tag "$name@$version" latest
+
+scripts/clean

@@ -1,0 +1,41 @@
+{
+  "name": "node-imagemagick",
+  "version": "0.0.1",
+  "description": "Node.js interface to the ImageMagick commandline tools",
+  "homepage": "https://bitbucket.org/Cybolic/node-imagemagick",
+  "keywords": [
+    "thumbnail",
+    "modules",
+    "font",
+    "preview",
+    "miniature"
+  ],
+  "license": "MIT",
+  "main": "lib/thumber.js",
+  "scripts": {
+    "prepublish": "./scripts/clean && ./scripts/build",
+    "postpublish": "./scripts/publish",
+    "test": "./scripts/test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://bitbucket.org/Cybolic/node-imagemagick"
+  },
+  "bugs": {
+    "url": "https://bitbucket.org/Cybolic/node-imagemagick/issues"
+  },
+  "author": {
+    "name": "Christian Dannie Storgaard",
+    "url": "http://cybolic.me"
+  },
+  "devDependencies": {
+    "coffee-script": ">=1.4.0",
+    "mocha": "~1.12.0",
+    "chai": "~1.7.2"//,
+    //"grunt": "~0.4.1"
+  },
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "dependencies": {}
+}

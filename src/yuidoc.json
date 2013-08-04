@@ -1,0 +1,12 @@
+{
+  "name": "The ImageMagick.js API",
+  "description": "The ImageMagick.js API: a Node.js interface to the ImageMagick commandline tools",
+  "version": "0.0.1",
+  "url": "http://example.com/",
+  "options": {
+    "paths": "src",
+    "outdir": "apidocs",
+    "syntaxtype": "coffee",
+    "extension": ".coffee"
+  }
+}
