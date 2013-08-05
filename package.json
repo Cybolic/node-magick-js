@@ -29,7 +29,7 @@
     "url": "http://cybolic.me"
   },
   "devDependencies": {
-    "coffee-script": ">=1.4.0",
+    "coffee-script": ">=1.2.0",
     "mocha": "~1.12.0",
     "chai": "~1.7.2"
   },
