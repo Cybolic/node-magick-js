@@ -23,7 +23,7 @@ imagemagick.convert(
   {unsharp: 0.5},                                  // `unsharp` accepts either a sigma value or an object as an argument (e.g. `{unsharp: {sigma:6, gain:0.5, threshold:0}}`).
   {add: 'PNG8:image_thumb.png'},
   function(error, stdout, stderr) {                // any argument that is a Function will be used as the callback.
-    console.log "Thumbnail created."               // If you prefer events, 'run_error' or 'run_success' will be emitted if not callback function is given.
+    console.log "Thumbnail created."               // If you prefer events, 'run_error' or 'run_success' will be emitted if a callback function isn't given.
   }
 );
 
