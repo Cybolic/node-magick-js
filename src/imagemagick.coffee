@@ -894,7 +894,6 @@ class Convert extends EventEmitter
     @
 
   run: (callback) =>
-    return "convert #{@arguments.join ' '}"
     ChildProcess.exec "convert #{@arguments.join ' '}", (error, stderr, stdout) =>
       if callback
         callback error, stdout, stderr
