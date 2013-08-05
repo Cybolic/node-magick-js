@@ -1,4 +1,4 @@
 node-imagemagick
 ================
 
-A Node.js interface to the ImageMagick commandline tools
+A Node.js interface to the ImageMagick commandline tools.
