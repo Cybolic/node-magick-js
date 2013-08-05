@@ -4,11 +4,12 @@ expect = chai.expect
 
 
 describe "ImageMagick", ->
+
   describe 'Options parsing', ->
     describe 'Geometry', ->
       testWidth = 20
       testHeight = 30
-      ImageMagick = require '../src/options'
+      ImageMagick = require '../src/imagemagick'
 
       ### Positive tests ###
 
@@ -75,10 +76,13 @@ describe "ImageMagick", ->
         geometry.should.equal "#{testWidth}"
 
     describe 'Define', ->
-      ImageMagick = require '../src/options'
+      ImageMagick = require '../src/imagemagick'
       it "should understand a `size` subkey", ->
         definitions = ImageMagick.inputTypes.define jpeg:(size:width:128,height:128), showkernel:1
         definitions.should.be.an 'array'
         definitions.should.have.length 2
         definitions.should.include "jpeg:size=128x128"
         definitions.should.include "showkernel=1"
+
+  describe "Function calling", ->
+    describe "", ->
