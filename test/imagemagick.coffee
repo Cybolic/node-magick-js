@@ -85,4 +85,39 @@ describe "ImageMagick", ->
         definitions.should.include "showkernel=1"
 
   describe "Function calling", ->
-    describe "", ->
+    ImageMagick = require '../src/imagemagick'
+    ImageMagick.convert::run = ->
+      @
+
+    it "should accept initial arguments", ->
+      convert = ImageMagick.convert(
+        {define: jpeg: size: width:256, height:256}
+        {add: 'image.png'}
+        'autoOrient'
+        {fuzz: 5}
+        'trim'
+        {repage: true}
+        'strip'
+        {thumbnail: width:128, height:128, onlyShrink:true}
+        {unsharp: 0.5}
+        {add: 'PNG8:image_thumb.png'}
+        (error, stdout, stderr) ->
+          console.log "Thumbnail created."
+      )
+      convert.arguments.should.be.an 'array'
+      convert.arguments.join(' ').should.eql "-define 'jpeg:size=256x256' image.png -auto-orient -fuzz 5 -trim +repage -strip -thumbnail '128x128>' -unsharp '0x0.5+1+0.05' PNG8:image_thumb.png"
+
+    it "should accept programmatic argument adding", ->
+      convert = ImageMagick.convert()
+      convert.define jpeg: size: width:256, height:256
+      convert.add 'image.png'
+      convert.autoOrient()
+      convert.fuzz 5
+      convert.trim()
+      convert.repage true
+      convert.strip()
+      convert.thumbnail width:128, height:128, onlyShrink:true
+      convert.unsharp 0.5
+      convert.add 'PNG8:image_thumb.png'
+      convert.arguments.should.be.an 'array'
+      convert.arguments.join(' ').should.eql "-define 'jpeg:size=256x256' image.png -auto-orient -fuzz 5 -trim +repage -strip -thumbnail '128x128>' -unsharp '0x0.5+1+0.05' PNG8:image_thumb.png"

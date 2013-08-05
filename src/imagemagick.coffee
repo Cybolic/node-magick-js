@@ -169,13 +169,13 @@ inputTypes =
 options =
   # adaptively blur pixels; decrease effect near edges
   adaptiveBlur: (geometry) ->
-    [ '-adaptive-blur', inputTypes.geometry geometry ]
+    [ '-adaptive-blur', "'#{inputTypes.geometry geometry}'" ]
   # adaptively resize image with data dependent triangulation.
   adaptiveResize: (geometry) ->
-    [ '-adaptive-resize', inputTypes.geometry geometry ]
+    [ '-adaptive-resize', "'#{inputTypes.geometry geometry}'" ]
   # adaptively sharpen pixels; increase effect near edges
   adaptiveSharpen: (geometry) ->
-    [ '-adaptive-sharpen', inputTypes.geometry geometry ]
+    [ '-adaptive-sharpen', "'#{inputTypes.geometry geometry}'" ]
   # join images into a single multi-image file
   adjoin: ->
     [ '-adjoin' ]
@@ -187,7 +187,7 @@ options =
     [ '-alpha' ]
   # text annotate the image with text
   annotate: (geometry) ->
-    [ '-annotate', inputTypes.geometry geometry ]
+    [ '-annotate', "'#{inputTypes.geometry geometry}'" ]
   # remove pixel-aliasing
   antialias: ->
     [ '-antialias' ]
@@ -226,16 +226,16 @@ options =
     [ '-blue-shift', factor ]
   # reduce image noise and reduce detail levels
   blur: (geometry) ->
-    [ '-blur', inputTypes.geometry geometry ]
+    [ '-blur', "'#{inputTypes.geometry geometry}'" ]
   # surround image with a border of color
   border: (geometry) ->
-    [ '-border', inputTypes.geometry geometry ]
+    [ '-border', "'#{inputTypes.geometry geometry}'" ]
   # border color
   bordercolor: (color) ->
     [ '-bordercolor', color ]
   # improve brightness / contrast of the image
   brightnessContrast: (geometry) ->
-    [ '-brightness-contrast', inputTypes.geometry geometry ]
+    [ '-brightness-contrast', "'#{inputTypes.geometry geometry}'" ]
   # assign a caption to an image
   caption: (string) ->
     [ '-caption', string ]
@@ -250,7 +250,7 @@ options =
     [ '-charcoal', radius ]
   # remove pixels from the image interior
   chop: (geometry) ->
-    [ '-chop', inputTypes.geometry geometry ]
+    [ '-chop', "'#{inputTypes.geometry geometry}'" ]
   # set each pixel whose value is below zero to zero and any the pixel whose value is above the quantum range to the quantum range (e.g. 65535) otherwise the pixel value remains unchanged.
   clamp: ->
     [ '-clamp' ]
@@ -271,7 +271,7 @@ options =
     [ '-clut' ]
   # improve the contrast in an image by `stretching' the range of intensity value
   contrastStretch: (geometry) ->
-    [ '-contrast-stretch', inputTypes.geometry geometry ]
+    [ '-contrast-stretch', "'#{inputTypes.geometry geometry}'" ]
   # merge a sequence of images
   coalesce: ->
     [ '-coalesce' ]
@@ -310,7 +310,7 @@ options =
     [ '-convolve', coefficients ]
   # crop the image
   crop: (geometry) ->
-    [ '-crop', inputTypes.geometry geometry ]
+    [ '-crop', "'#{inputTypes.geometry geometry}'" ]
   # cycle the image colormap
   cycle: (amount) ->
     [ '-cycle', amount ]
@@ -322,7 +322,7 @@ options =
     [ '-debug', events ]
   # define one or more image format options
   define: (definitions) ->
-    ( "-define #{definition}" for definition in inputTypes.define definitions )
+    ( "-define '#{definition}'" for definition in inputTypes.define definitions )
   # break down an image sequence into constituent parts
   deconstruct: ->
     [ '-deconstruct' ]
@@ -334,7 +334,7 @@ options =
     [ '-delete', index ]
   # horizontal and vertical density of the image
   density: (geometry) ->
-    [ '-density', inputTypes.geometry geometry ]
+    [ '-density', "'#{inputTypes.geometry geometry}'" ]
   # image depth
   depth: (value) ->
     [ '-depth', value ]
@@ -394,10 +394,10 @@ options =
     [ '-evaluate-sequence', operator ]
   # set the image size
   extent: (geometry) ->
-    [ '-extent', inputTypes.geometry geometry ]
+    [ '-extent', "'#{inputTypes.geometry geometry}'" ]
   # extract area from image
   extract: (geometry) ->
-    [ '-extract', inputTypes.geometry geometry ]
+    [ '-extract', "'#{inputTypes.geometry geometry}'" ]
   # render text with this font family
   family: (name) ->
     [ '-family', name ]
@@ -421,7 +421,7 @@ options =
     [ '-flip' ]
   # color floodfill the image with color
   floodfill: (geometry) ->
-    [ '-floodfill', inputTypes.geometry geometry ]
+    [ '-floodfill', "'#{inputTypes.geometry geometry}'" ]
   # flop image in the horizontal direction
   flop: ->
     [ '-flop' ]
@@ -433,7 +433,7 @@ options =
     [ '-format', string ]
   # surround image with an ornamental border
   frame: (geometry) ->
-    [ '-frame', inputTypes.geometry geometry ]
+    [ '-frame', "'#{inputTypes.geometry geometry}'" ]
   # apply a function to the image
   function: (name) ->
     [ '-function', name ]
@@ -448,10 +448,10 @@ options =
     [ '-gamma', value ]
   # reduce image noise and reduce detail levels
   gaussianBlur: (geometry) ->
-    [ '-gaussian-blur', inputTypes.geometry geometry ]
+    [ '-gaussian-blur', "'#{inputTypes.geometry geometry}'" ]
   # preferred size or location of the image
   geometry: (geometry) ->
-    [ '-geometry', inputTypes.geometry geometry ]
+    [ '-geometry', "'#{inputTypes.geometry geometry}'" ]
   # horizontal and vertical text placement
   gravity: (type) ->
     [ '-gravity', type ]
@@ -502,7 +502,7 @@ options =
     [ '-label', string ]
   # local adaptive thresholding
   lat: (geometry) ->
-    [ '-lat', inputTypes.geometry geometry ]
+    [ '-lat', "'#{inputTypes.geometry geometry}'" ]
   # optimize or compare image layers
   layers: (method) ->
     [ '-layers', method ]
@@ -514,10 +514,10 @@ options =
     [ '-limit', type ]
   # linear with saturation histogram stretch
   linearStretch: (geometry) ->
-    [ '-linear-stretch', inputTypes.geometry geometry ]
+    [ '-linear-stretch', "'#{inputTypes.geometry geometry}'" ]
   # rescale image with seam-carving
   liquidRescale: (geometry) ->
-    [ '-liquid-rescale', inputTypes.geometry geometry ]
+    [ '-liquid-rescale', "'#{inputTypes.geometry geometry}'" ]
   # format of debugging information
   log: (format) ->
     [ '-log', format ]
@@ -553,7 +553,7 @@ options =
     [ '-morphology', method ]
   # simulate motion blur
   motionBlur: (geometry) ->
-    [ '-motion-blur', inputTypes.geometry geometry ]
+    [ '-motion-blur', "'#{inputTypes.geometry geometry}'" ]
   # replace each pixel with its complementary color
   negate: ->
     [ '-negate' ]
@@ -574,7 +574,7 @@ options =
     [ '-orient', type ]
   # size and location of an image canvas (setting)
   page: (geometry) ->
-    [ '-page', inputTypes.geometry geometry ]
+    [ '-page', "'#{inputTypes.geometry geometry}'" ]
   # simulate an oil painting
   paint: (radius) ->
     [ '-paint', radius ]
@@ -637,7 +637,7 @@ options =
     [ '-regard-warnings',  pay ]
   # apply options to a portion of the image
   region: (geometry) ->
-    [ '-region', inputTypes.geometry geometry ]
+    [ '-region', "'#{inputTypes.geometry geometry}'" ]
   # transform image colors to match this set of colors
   remap: (filename) ->
     [ '-remap', filename ]
@@ -646,31 +646,31 @@ options =
     [ '-render' ]
   # size and location of an image canvas
   repage: (geometry) ->
-    [ '-repage', inputTypes.geometry geometry ]
+    [ '-repage', "'#{inputTypes.geometry geometry}'" ]
   # change the resolution of an image
   resample: (geometry) ->
-    [ '-resample', inputTypes.geometry geometry ]
+    [ '-resample', "'#{inputTypes.geometry geometry}'" ]
   # resize the image
   resize: (geometry) ->
-    [ '-resize', inputTypes.geometry geometry ]
+    [ '-resize', "'#{inputTypes.geometry geometry}'" ]
   # settings remain in effect until parenthesis boundary.
   respectParentheses: ->
     [ '-respect-parentheses' ]
   # roll an image vertically or horizontally
   roll: (geometry) ->
-    [ '-roll', inputTypes.geometry geometry ]
+    [ '-roll', "'#{inputTypes.geometry geometry}'" ]
   # apply Paeth rotation to the image
   rotate: (degrees) ->
     [ '-rotate', degrees ]
   # scale image with pixel sampling
   sample: (geometry) ->
-    [ '-sample', inputTypes.geometry geometry ]
+    [ '-sample', "'#{inputTypes.geometry geometry}'" ]
   # horizontal and vertical sampling factor
   samplingFactor: (geometry) ->
-    [ '-sampling-factor', inputTypes.geometry geometry ]
+    [ '-sampling-factor', "'#{inputTypes.geometry geometry}'" ]
   # scale the image
   scale: (geometry) ->
-    [ '-scale', inputTypes.geometry geometry ]
+    [ '-scale', "'#{inputTypes.geometry geometry}'" ]
   # image scene number
   scene: (value) ->
     [ '-scene', value ]
@@ -682,7 +682,7 @@ options =
     [ '-segment', values ]
   # selectively blur pixels within a contrast threshold
   selectiveBlur: (geometry) ->
-    [ '-selective-blur', inputTypes.geometry geometry ]
+    [ '-selective-blur', "'#{inputTypes.geometry geometry}'" ]
   # separate an image channel into a grayscale image
   separate: ->
     [ '-separate' ]
@@ -697,34 +697,34 @@ options =
     [ '-shade', degrees ]
   # simulate an image shadow
   shadow: (geometry) ->
-    [ '-shadow', inputTypes.geometry geometry ]
+    [ '-shadow', "'#{inputTypes.geometry geometry}'" ]
   # sharpen the image
   sharpen: (geometry) ->
-    [ '-sharpen', inputTypes.geometry geometry ]
+    [ '-sharpen', "'#{inputTypes.geometry geometry}'" ]
   # shave pixels from the image edges
   shave: (geometry) ->
-    [ '-shave', inputTypes.geometry geometry ]
+    [ '-shave', "'#{inputTypes.geometry geometry}'" ]
   # slide one edge of the image along the X or Y axis
   shear: (geometry) ->
-    [ '-shear', inputTypes.geometry geometry ]
+    [ '-shear', "'#{inputTypes.geometry geometry}'" ]
   # increase the contrast without saturating highlights or shadows
   sigmoidalContrast: (geometry) ->
-    [ '-sigmoidal-contrast', inputTypes.geometry geometry ]
+    [ '-sigmoidal-contrast', "'#{inputTypes.geometry geometry}'" ]
   # smush an image sequence together
   smush: (offset) ->
     [ '-smush', offset ]
   # width and height of image
   size: (geometry) ->
-    [ '-size', inputTypes.geometry geometry ]
+    [ '-size', "'#{inputTypes.geometry geometry}'" ]
   # simulate a pencil sketch
   sketch: (geometry) ->
-    [ '-sketch', inputTypes.geometry geometry ]
+    [ '-sketch', "'#{inputTypes.geometry geometry}'" ]
   # negate all pixels above the threshold level
   solarize: (threshold) ->
     [ '-solarize', threshold ]
   # splice the background color into the image
   splice: (geometry) ->
-    [ '-splice', inputTypes.geometry geometry ]
+    [ '-splice', "'#{inputTypes.geometry geometry}'" ]
   # displace image pixels by a random amount
   spread: (radius) ->
     [ '-spread', radius ]
@@ -766,13 +766,13 @@ options =
     [ '-threshold', value ]
   # create a thumbnail of the image
   thumbnail: (geometry) ->
-    [ '-thumbnail', inputTypes.geometry geometry ]
+    [ '-thumbnail', "'#{inputTypes.geometry geometry}'" ]
   # tile image when filling a graphic primitive
   tile: (filename) ->
     [ '-tile', filename ]
   # set the image tile offset
   tileOffset: (geometry) ->
-    [ '-tile-offset', inputTypes.geometry geometry ]
+    [ '-tile-offset', "'#{inputTypes.geometry geometry}'" ]
   # tint the image with the fill color
   tint: (value) ->
     [ '-tint', value ]
@@ -811,7 +811,7 @@ options =
     [ '-units', type ]
   # sharpen the image
   unsharp: (unsharp) =>
-    [ '-unsharp', inputTypes.unsharp unsharp ]
+    [ '-unsharp', "'#{inputTypes.unsharp unsharp}'" ]
   # print detailed information about the image
   verbose: ->
     [ '-verbose' ]
@@ -823,13 +823,13 @@ options =
     [ '-view' ]
   # soften the edges of the image in vignette style
   vignette: (geometry) ->
-    [ '-vignette', inputTypes.geometry geometry ]
+    [ '-vignette', "'#{inputTypes.geometry geometry}'" ]
   # access method for pixels outside the boundaries of the image
   virtualPixel: (method) ->
     [ '-virtual-pixel', method ]
   # alter an image along a sine wave
   wave: (geometry) ->
-    [ '-wave', inputTypes.geometry geometry ]
+    [ '-wave', "'#{inputTypes.geometry geometry}'" ]
   # render text with this font weight
   weight: (type) ->
     [ '-weight', type ]
@@ -850,7 +850,7 @@ options =
 class Convert extends EventEmitter
 
   addArgs = (args...) ->
-    this.args = this.args.concat args
+    this.arguments = this.arguments.concat args
 
   optionToChainable = (option, func) ->
     this[option] = ((func) ->
@@ -868,7 +868,7 @@ class Convert extends EventEmitter
     ).call this, func
 
   constructor: ->
-    @args = []
+    @arguments = []
     callback = null
 
     # Add available options as chainable functions of this object
@@ -894,7 +894,8 @@ class Convert extends EventEmitter
     @
 
   run: (callback) =>
-    ChildProcess.exec "convert #{@args.join ' '}", (error, stderr, stdout) =>
+    return "convert #{@arguments.join ' '}"
+    ChildProcess.exec "convert #{@arguments.join ' '}", (error, stderr, stdout) =>
       if callback
         callback error, stdout, stderr
       else
