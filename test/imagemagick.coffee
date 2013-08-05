@@ -1,6 +1,7 @@
 chai = require 'chai'
 chai.should()  # add `should` to the Object prototype
 expect = chai.expect
+mockery = require 'mockery'
 
 
 describe "ImageMagick", ->
@@ -9,6 +10,7 @@ describe "ImageMagick", ->
     describe 'Geometry', ->
       testWidth = 20
       testHeight = 30
+
       ImageMagick = require '../src/imagemagick'
 
       ### Positive tests ###
@@ -85,11 +87,21 @@ describe "ImageMagick", ->
         definitions.should.include "showkernel=1"
 
   describe "Function calling", ->
-    ImageMagick = require '../src/imagemagick'
-    ImageMagick.convert::run = ->
-      @
+    ImageMagick = null
 
-    it "should accept initial arguments", ->
+    before ->
+      mockery.enable useCleanCache: true
+      child_process_mock =
+        exec: (args, callback) ->
+          callback null, '', ''
+      mockery.registerMock 'child_process', child_process_mock
+      mockery.registerAllowable '../src/imagemagick'
+      ImageMagick = require '../src/imagemagick'
+
+    after ->
+      mockery.disable()
+
+    it "should accept initial arguments", (done) ->
       convert = ImageMagick.convert(
         {define: jpeg: size: width:256, height:256}
         {add: 'image.png'}
@@ -101,8 +113,7 @@ describe "ImageMagick", ->
         {thumbnail: width:128, height:128, onlyShrink:true}
         {unsharp: 0.5}
         {add: 'PNG8:image_thumb.png'}
-        (error, stdout, stderr) ->
-          console.log "Thumbnail created."
+        done
       )
       convert.arguments.should.be.an 'array'
       convert.arguments.join(' ').should.eql "-define 'jpeg:size=256x256' image.png -auto-orient -fuzz 5 -trim +repage -strip -thumbnail '128x128>' -unsharp '0x0.5+1+0.05' PNG8:image_thumb.png"
