@@ -1,6 +1,4 @@
-# Thumber
+node-imagemagick
+================
 
-Create thumbnails for most of the file types supported by ImageMagick.
-
-## How to use
-
+A Node.js interface to the ImageMagick commandline tools
