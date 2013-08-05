@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Node-imagemagick by Cybolic</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Node-imagemagick</h1>
+        <h2>A Node.js interface to the ImageMagick commandline tools</h2>
+        <a href="https://github.com/Cybolic/node-imagemagick" class="button"><small>View project on</small>GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>
+<a name="node-imagemagick" class="anchor" href="#node-imagemagick"><span class="octicon octicon-link"></span></a>node-imagemagick</h1>
+
+<p><a href="https://travis-ci.org/Cybolic/node-imagemagick"><img src="https://travis-ci.org/Cybolic/node-imagemagick.png?branch=master" alt="Build Status"></a></p>
+
+<p>A Node.js interface to the ImageMagick command-line tools.</p>
+
+<p>NOTE: This project does not yet support all of ImageMagicks tools. Currently only <code>convert</code> is supported.</p>
+
+<h2>
+<a name="examples" class="anchor" href="#examples"><span class="octicon octicon-link"></span></a>Examples</h2>
+
+<p>To save a thumbnail of an image:</p>
+
+<div class="highlight"><pre><span class="nx">imagemagick</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'imagemagick'</span><span class="p">);</span>
+
+<span class="cm">/* Run the command immediately: */</span>
+<span class="nx">imagemagick</span><span class="p">.</span><span class="nx">convert</span><span class="p">(</span>
+  <span class="p">{</span><span class="nx">define</span><span class="o">:</span> <span class="p">{</span><span class="nx">jpeg</span><span class="o">:</span><span class="p">{</span><span class="nx">size</span><span class="o">:</span><span class="p">{</span><span class="nx">width</span><span class="o">:</span><span class="mi">256</span><span class="p">,</span> <span class="nx">height</span><span class="o">:</span><span class="mi">256</span><span class="p">}}}},</span>      <span class="c1">// `define` definitions are serialised and `geometry` values are parsed.</span>
+  <span class="p">{</span><span class="nx">add</span><span class="o">:</span> <span class="s1">'image.png'</span><span class="p">},</span>                                   <span class="c1">// `add` is a way to add custom arguments, in this case the filename.</span>
+  <span class="s1">'autoOrient'</span><span class="p">,</span>                                         <span class="c1">// options that don't require arguments can be given as a string or object (e.g. `{autoOrient: null}`).</span>
+  <span class="p">{</span><span class="nx">fuzz</span><span class="o">:</span><span class="mi">5</span><span class="p">},</span>
+  <span class="s1">'trim'</span><span class="p">,</span>
+  <span class="p">{</span><span class="nx">repage</span><span class="o">:</span> <span class="kc">true</span><span class="p">},</span>                                       <span class="c1">// if a Boolean is given as the only argument, then the option functions as a reset (e.g. '+repage').</span>
+  <span class="s1">'strip'</span><span class="p">,</span>
+  <span class="p">{</span><span class="nx">thumbnail</span><span class="o">:</span> <span class="p">{</span><span class="nx">width</span><span class="o">:</span><span class="mi">128</span><span class="p">,</span><span class="nx">height</span><span class="o">:</span><span class="mi">128</span><span class="p">,</span><span class="nx">onlyShrink</span><span class="o">:</span><span class="kc">true</span><span class="p">}},</span>  <span class="c1">// `geometry` object values have a more clear syntax, but you can give a string if you want (e.g. "128x128&gt;").</span>
+  <span class="p">{</span><span class="nx">unsharp</span><span class="o">:</span> <span class="mf">0.5</span><span class="p">},</span>                                       <span class="c1">// `unsharp` accepts either a sigma value or an object as an argument (e.g. `{unsharp: {sigma:6, gain:0.5, threshold:0}}`).</span>
+  <span class="p">{</span><span class="nx">add</span><span class="o">:</span> <span class="s1">'PNG8:image_thumb.png'</span><span class="p">},</span>
+  <span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">stdout</span><span class="p">,</span> <span class="nx">stderr</span><span class="p">)</span> <span class="p">{</span>                     <span class="c1">// any argument that is a Function will be used as the callback.</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Thumbnail created."</span><span class="p">);</span>                  <span class="c1">// If you prefer events, 'run_error' or 'run_success' will be emitted if a callback function isn't given.</span>
+  <span class="p">}</span>
+<span class="p">);</span>
+
+<span class="cm">/* Or create it programmatically: */</span>
+<span class="kd">var</span> <span class="nx">cropImage</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">convert</span> <span class="o">=</span> <span class="nx">imagemagick</span><span class="p">.</span><span class="nx">convert</span><span class="p">()</span>
+  <span class="p">.</span><span class="nx">define</span><span class="p">({</span><span class="nx">jpeg</span><span class="o">:</span><span class="p">{</span><span class="nx">size</span><span class="o">:</span><span class="p">{</span><span class="nx">width</span><span class="o">:</span><span class="mi">256</span><span class="p">,</span> <span class="nx">height</span><span class="o">:</span><span class="mi">256</span><span class="p">}}})</span>
+  <span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="s1">'image.png'</span><span class="p">})</span>
+  <span class="p">.</span><span class="nx">autoOrient</span><span class="p">()</span>
+<span class="p">;</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">cropImage</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">convert</span>
+    <span class="p">.</span><span class="nx">fuzz</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">trim</span><span class="p">()</span>
+    <span class="p">.</span><span class="nx">repage</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
+  <span class="p">;</span>
+<span class="p">}</span>
+<span class="nx">convert</span>
+  <span class="p">.</span><span class="nx">strip</span><span class="p">()</span>
+  <span class="p">.</span><span class="nx">thumbnail</span><span class="p">({</span><span class="nx">width</span><span class="o">:</span><span class="mi">128</span><span class="p">,</span><span class="nx">height</span><span class="o">:</span><span class="mi">128</span><span class="p">,</span><span class="nx">onlyShrink</span><span class="o">:</span><span class="kc">true</span><span class="p">})</span>
+  <span class="p">.</span><span class="nx">unsharp</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="s1">'PNG8:image_thumb.png'</span><span class="p">)</span>
+<span class="p">;</span>
+<span class="nx">convert</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">'run_success'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">stdout</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Thumbnail created."</span><span class="p">);</span>
+<span class="p">});</span>
+<span class="nx">convert</span><span class="p">.</span><span class="nx">run</span><span class="p">();</span>
+</pre></div>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/Cybolic/node-imagemagick/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/Cybolic/node-imagemagick/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/Cybolic/node-imagemagick"></a> is maintained by <a href="https://github.com/Cybolic">Cybolic</a>.</p>
+
+          <p>This page was generated by <a href="pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
