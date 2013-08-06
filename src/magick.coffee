@@ -1,9 +1,9 @@
 ###*
-# Setup arguments for and/or run ImageMagick commands.
+# Setup arguments for and/or run Image/Graphics-Magick commands.
 #
-# @module ImageMagick
-# @class ImageMagick
-# @main ImageMagick
+# @module Magick
+# @class Magick
+# @main Magick
 ###
 
 ChildProcess   = require 'child_process'
@@ -2075,7 +2075,7 @@ class Command extends EventEmitter
   # @chainable
   ###
   run: (callback) =>
-    ChildProcess.exec "convert #{@arguments.join ' '}", (error, stderr, stdout) =>
+    ChildProcess.exec "#{@command} #{@arguments.join ' '}", (error, stderr, stdout) =>
       if callback? and callback
         callback error, stdout, stderr
       else
