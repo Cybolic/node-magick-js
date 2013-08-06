@@ -1,12 +1,14 @@
 {
-  "name": "The ImageMagick.js API",
-  "description": "The ImageMagick.js API: a Node.js interface to the ImageMagick commandline tools",
+  "name": "node-imagemagick",
+  "description": "Node.js API for ImageMagick",
   "version": "0.0.1",
   "url": "http://example.com/",
   "options": {
     "paths": "src",
     "outdir": "apidocs",
     "syntaxtype": "coffee",
-    "extension": ".coffee"
+    "extension": ".coffee",
+    "themedir" : "../../yuidoc-bootstrap-theme",
+    "helpers" : [ "../..//yuidoc-bootstrap-theme/helpers/helpers.js" ]
   }
 }

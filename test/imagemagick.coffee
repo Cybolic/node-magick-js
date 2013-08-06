@@ -10,10 +10,19 @@ describe "ImageMagick", ->
     describe 'Geometry', ->
       testWidth = 20
       testHeight = 30
+      testFloat = 0.4
 
       ImageMagick = require '../src/imagemagick'
 
       ### Positive tests ###
+
+      it "should understand `opacity`", ->
+        geometry = ImageMagick.inputTypes.geometry opacity: testHeight
+        geometry.should.equal "#{testHeight}"
+
+      it "should understand `opacity` and `sigma`", ->
+        geometry = ImageMagick.inputTypes.geometry opacity: testHeight, sigma: testFloat
+        geometry.should.equal "#{testHeight}x#{testFloat}"
 
       it "should understand `scale`", ->
         geometry = ImageMagick.inputTypes.geometry scale: testWidth
@@ -63,6 +72,10 @@ describe "ImageMagick", ->
         geometry = ImageMagick.inputTypes.geometry width: testWidth, height: testHeight, fill: true, offsetX: testHeight, offsetY: (testWidth*-1)
         geometry.should.equal "#{testWidth}x#{testHeight}^+#{testHeight}-#{testWidth}"
 
+      it "should understand offsets with `usePercentage`", ->
+        geometry = ImageMagick.inputTypes.geometry width: testWidth, height: testHeight, fill: true, offsetX: testHeight, offsetY: testWidth, usePercentage: true
+        geometry.should.equal "#{testWidth}x#{testHeight}^+#{testHeight}+#{testWidth}%"
+
       ### Negative tests ###
 
       it "if argument is not understood and is an Object, should thow error", ->
@@ -89,34 +102,27 @@ describe "ImageMagick", ->
   describe "Function calling", ->
     ImageMagick = null
 
-    before ->
+    beforeEach ->
       mockery.enable useCleanCache: true
-      child_process_mock =
+
+      mockery.registerMock 'child_process',
         exec: (args, callback) ->
-          callback null, '', ''
-      mockery.registerMock 'child_process', child_process_mock
+          callback null, args, ''
+
+      mockery.registerMock 'events',
+        EventEmitter: class EventEmitter
+          constructor: -> @emitted_events = []
+          emit: (event_name, args...) =>
+            @emitted_events.push {event_name: args}
+
       mockery.registerAllowable '../src/imagemagick'
+
       ImageMagick = require '../src/imagemagick'
 
-    after ->
+    afterEach ->
+      mockery.deregisterAll()
       mockery.disable()
 
-    it "should accept initial arguments", (done) ->
-      convert = ImageMagick.convert(
-        {define: jpeg: size: width:256, height:256}
-        {add: 'image.png'}
-        'autoOrient'
-        {fuzz: 5}
-        'trim'
-        {repage: true}
-        'strip'
-        {thumbnail: width:128, height:128, onlyShrink:true}
-        {unsharp: 0.5}
-        {add: 'PNG8:image_thumb.png'}
-        done
-      )
-      convert.arguments.should.be.an 'array'
-      convert.arguments.join(' ').should.eql "-define 'jpeg:size=256x256' image.png -auto-orient -fuzz 5 -trim +repage -strip -thumbnail '128x128>' -unsharp '0x0.5+1+0.05' PNG8:image_thumb.png"
 
     it "should accept programmatic argument adding", ->
       convert = ImageMagick.convert()
@@ -130,5 +136,21 @@ describe "ImageMagick", ->
       convert.thumbnail width:128, height:128, onlyShrink:true
       convert.unsharp 0.5
       convert.add 'PNG8:image_thumb.png'
+      convert.arguments.should.be.an 'array'
+      convert.arguments.join(' ').should.eql "-define 'jpeg:size=256x256' image.png -auto-orient -fuzz 5 -trim +repage -strip -thumbnail '128x128>' -unsharp '0x0.5+1+0.05' PNG8:image_thumb.png"
+
+    it "should accept initial arguments", (done) ->
+      convert = ImageMagick.convert [
+        {define: jpeg: size: width:256, height:256}
+        {add: 'image.png'}
+        'autoOrient'
+        {fuzz: 5}
+        'trim'
+        {repage: true}
+        'strip'
+        {thumbnail: width:128, height:128, onlyShrink:true}
+        {unsharp: 0.5}
+        {add: 'PNG8:image_thumb.png'}
+      ], done
       convert.arguments.should.be.an 'array'
       convert.arguments.join(' ').should.eql "-define 'jpeg:size=256x256' image.png -auto-orient -fuzz 5 -trim +repage -strip -thumbnail '128x128>' -unsharp '0x0.5+1+0.05' PNG8:image_thumb.png"
