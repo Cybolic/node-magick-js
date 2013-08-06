@@ -26,7 +26,7 @@ imagemagick.convert([
     {add: 'PNG8:image_thumb.png'}
   ],
   function(error, stdout, stderr) {                     // optional callback function.
-    console.log("Thumbnail created.");                  // If you prefer events, 'run_error' or 'run_success' will be emitted if a callback function isn't given.
+    console.log("Thumbnail created.");                  // If you prefer events, 'done' and 'run_error' or 'run_success' will be emitted if a callback function isn't given.
   }
 );
 
