@@ -1978,7 +1978,7 @@ OPTIONS =
 ###
 class Command extends EventEmitter
 
-  constructor: (@command, argument_list, @callback) ->
+  constructor: (@command, argument_list, @callback=undefined) ->
     @arguments = []
 
     # Bind private methods to curent scope
@@ -1993,8 +1993,7 @@ class Command extends EventEmitter
     # If arguments were provided, use each object as the name of the option to call and its value as the arguments
     if argument_list?.length? and argument_list.length > 0
       @callMethods argument_list
-      if @callback? and typeof @callback is 'function'
-        @run @callback
+      @run @callback
     @
 
 
@@ -2077,7 +2076,7 @@ class Command extends EventEmitter
   ###
   run: (callback) =>
     ChildProcess.exec "convert #{@arguments.join ' '}", (error, stderr, stdout) =>
-      if callback
+      if callback? and callback
         callback error, stdout, stderr
       else
         @emit 'done', error, stdout, stderr

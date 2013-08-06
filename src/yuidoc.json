@@ -8,7 +8,7 @@
     "outdir": "apidocs",
     "syntaxtype": "coffee",
     "extension": ".coffee",
-    "themedir" : "../../yuidoc-bootstrap-theme",
-    "helpers" : [ "../..//yuidoc-bootstrap-theme/helpers/helpers.js" ]
+    "themedir" : "../../External/yuidoc-bootstrap-theme",
+    "helpers" : [ "../../External/yuidoc-bootstrap-theme/helpers/helpers.js" ]
   }
 }

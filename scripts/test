@@ -1,7 +1,0 @@
-#!/bin/sh
-
-cd "$(dirname "$(readlink -f "$0")/")/../"
-
-PATH="$PATH:./node_modules/.bin"
-
-exec mocha --compilers coffee:coffee-script -R spec $@

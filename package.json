@@ -15,7 +15,9 @@
   "scripts": {
     "prepublish": "./scripts/clean && ./scripts/build",
     "postpublish": "./scripts/publish",
-    "test": "./scripts/test"
+    "test": "mocha",
+    "test-watch": "mocha -w -R min",
+    "test-coverage": "COVERAGE=1 mocha -R html-cov > coverage.html"
   },
   "repository": {
     "type": "git",
@@ -32,7 +34,9 @@
     "coffee-script": ">=1.2.0",
     "mocha": "~1.12.0",
     "chai": "~1.7.2",
-    "mockery": "~1.4.0"
+    "mockery": "~1.4.0",
+    "coffee-coverage": "~0.1.4",
+    "sinon": "~1.7.3"
   },
   "engines": {
     "node": ">= 0.8.0"

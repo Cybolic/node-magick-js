@@ -1,7 +1,9 @@
 chai = require 'chai'
 chai.should()  # add `should` to the Object prototype
 expect = chai.expect
+
 mockery = require 'mockery'
+sinon   = require 'sinon'
 
 
 describe "ImageMagick", ->
@@ -79,12 +81,8 @@ describe "ImageMagick", ->
       ### Negative tests ###
 
       it "if argument is not understood and is an Object, should thow error", ->
-        error = ''
-        try
-          geometry = ImageMagick.inputTypes.geometry wrongParameter: testWidth
-        catch e
-          error = e.message
-        error.should.equal "`wrongParameter` is not an accepted option"
+        geometryCall = -> ImageMagick.inputTypes.geometry wrongParameter: testWidth
+        expect(geometryCall).to.throw Error, "`wrongParameter` is not an accepted option"
 
       it "if argument is not understood and is not an Object, should pass it through a string", ->
         geometry = ImageMagick.inputTypes.geometry testWidth
@@ -101,6 +99,7 @@ describe "ImageMagick", ->
 
   describe "Function calling", ->
     ImageMagick = null
+    eventsMock = null
 
     beforeEach ->
       mockery.enable useCleanCache: true
@@ -109,11 +108,12 @@ describe "ImageMagick", ->
         exec: (args, callback) ->
           callback null, args, ''
 
-      mockery.registerMock 'events',
-        EventEmitter: class EventEmitter
-          constructor: -> @emitted_events = []
-          emit: (event_name, args...) =>
-            @emitted_events.push {event_name: args}
+      eventsMock =
+        emitSpy: sinon.spy()
+      eventsMock.EventEmitter = class EventEmitter
+          emit: eventsMock.emitSpy
+
+      mockery.registerMock 'events', eventsMock
 
       mockery.registerAllowable '../src/imagemagick'
 
@@ -123,6 +123,7 @@ describe "ImageMagick", ->
       mockery.deregisterAll()
       mockery.disable()
 
+    ### Positive tests ###
 
     it "should accept programmatic argument adding", ->
       convert = ImageMagick.convert()
@@ -154,3 +155,33 @@ describe "ImageMagick", ->
       ], done
       convert.arguments.should.be.an 'array'
       convert.arguments.join(' ').should.eql "-define 'jpeg:size=256x256' image.png -auto-orient -fuzz 5 -trim +repage -strip -thumbnail '128x128>' -unsharp '0x0.5+1+0.05' PNG8:image_thumb.png"
+
+    it "should emit events on completion if no callback was given", ->
+      convert = ImageMagick.convert [
+        {define: jpeg: size: width:256, height:256}
+        {add: 'image.png'}
+        'autoOrient'
+        {fuzz: 5}
+        'trim'
+        {repage: true}
+        'strip'
+        {thumbnail: width:128, height:128, onlyShrink:true}
+        {unsharp: 0.5}
+        {add: 'PNG8:image_thumb.png'}
+      ]
+      eventsMock.emitSpy.called.should.be.true
+      # Note that these event arguments are from the mocked child_process, so do not represent actual output
+      eventsMock.emitSpy.args.should.eql [
+        ["done", null, "", "convert -define 'jpeg:size=256x256' image.png -auto-orient -fuzz 5 -trim +repage -strip -thumbnail '128x128>' -unsharp '0x0.5+1+0.05' PNG8:image_thumb.png"]
+        ["run_success", ""]
+      ]
+
+    ### Negative tests ###
+
+    it "if argument is not understood, should thow error", ->
+      call = -> ImageMagick.convert [42:null]
+      expect(call).to.throw Error, "No such option `#{42}`"
+
+    it "if argument is not understood and is an Object or String, should thow error", ->
+      call = -> ImageMagick.convert [(->)]
+      expect(call).to.throw Error, "Unsupported argument type `function` of argument `#{(->)}`"

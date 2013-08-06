@@ -1,0 +1,3 @@
+--compilers coffee:coffee-script
+--require coverage.coffee
+--reporter spec
