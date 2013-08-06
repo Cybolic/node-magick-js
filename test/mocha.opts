@@ -1,3 +1,3 @@
 --compilers coffee:coffee-script
---require coverage.coffee
+--require test/coverage.coffee
 --reporter spec

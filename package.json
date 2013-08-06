@@ -1,17 +1,11 @@
 {
-  "name": "node-imagemagick",
+  "name": "Magick.js",
   "version": "0.0.1",
   "description": "Node.js interface to the ImageMagick commandline tools",
   "homepage": "https://bitbucket.org/Cybolic/node-imagemagick",
-  "keywords": [
-    "thumbnail",
-    "modules",
-    "font",
-    "preview",
-    "miniature"
-  ],
+  "keywords": ["thumbnail", "modules", "font", "preview", "miniature"],
   "license": "MIT",
-  "main": "lib/thumber.js",
+  "main": "lib/magick.js",
   "scripts": {
     "prepublish": "./scripts/clean && ./scripts/build",
     "postpublish": "./scripts/publish",
