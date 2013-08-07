@@ -1,5 +1,5 @@
 {
-  "name": "Magick.js",
+  "name": "magick.js",
   "version": "0.0.1",
   "description": "Node.js interface to the ImageMagick commandline tools",
   "homepage": "https://bitbucket.org/Cybolic/node-imagemagick",
